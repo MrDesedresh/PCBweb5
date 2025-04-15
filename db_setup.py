@@ -60,17 +60,6 @@ def create_tables(conn):
                 wattage INTEGER NOT NULL
             )
         ''')
-        cursor.execute('''
-            CREATE TABLE "disk" (
-	            id	INTEGER PRIMARY KEY AUTOINCREMENT,
-	            name	TEXT NOT NULL,
-	            disk_mb	INTEGER NOT NULL,
-	            speed_write	INTEGER NOT NULL,
-	            speep_read	INTEGER NOT NULL,
-	            boofer	REAL NOT NULL
-            )
-	
-        ''')
 
         conn.commit()
         print("Таблицы успешно созданы")
@@ -158,7 +147,7 @@ def populate_tables(conn):
                 print(f"Процессор '{name}' уже существует.")
 
         motherboards = [
-             ('ASUS ROG Strix Z690-A Gaming WiFi', 'LGA1700', 'DDR5'),
+            ('ASUS ROG Strix Z690-A Gaming WiFi', 'LGA1700', 'DDR5'),
             ('ASUS ROG Strix B760-G', 'LGA1700', 'DDR4'),
             ('ASUS TUF Gaming Z790-Plus', 'LGA1700', 'DDR4'),
             ('Gigabyte B550 Gaming X V2', 'AM4', 'DDR4'),
@@ -175,8 +164,8 @@ def populate_tables(conn):
             ('ASUS PRIME H610M-K D4', 'LGA1700', 'DDR4'),
             ('Gigabyte A520M DS3H', 'AM4', 'DDR4'),
             ('Asrock A520M-HDV', 'AM4', 'DDR4'),
-             ('ASUS ROG Maximus Z790 Hero', 'LGA1700', 'DDR5'),
-             ('ASUS ROG Crosshair X670E Hero', 'AM5', 'DDR5')
+            ('ASUS ROG Maximus Z790 Hero', 'LGA1700', 'DDR5'),
+            ('ASUS ROG Crosshair X670E Hero', 'AM5', 'DDR5')
         ]
 
         for name, socket, ram_type in motherboards:
@@ -285,32 +274,6 @@ def populate_tables(conn):
                 print(f"Блок питания '{name}' добавлен.")
             else:
                 print(f"Блок питания '{name}' уже существует.")
-
-        disk = [
-            ('Samsung 990 PRO', 1000, 6900, 7450, False),
-            ('ADATA LEGEND 960 MAX', 1000, 6000, 7400, False),
-            ('ADATA LEGEND 900', 2000, 5400, 7000, False),
-            ('Samsung 990 EVO', 1000, 4200, 5000, True),
-            ('Apacer AS2280Q4', 1000, 4400, 5000, False),
-            ('Samsung 990 EVO Plus', 1000, 6300, 7150, True),
-            ('Apacer AS2280F4 ', 1000, 9000, 11500, False),
-            ('Apacer AS2280Q4', 2000, 4400, 5000, False),
-            ('Samsung 990 EVO Plus', 2000, 6300, 7250, False),
-            ('Netac NV7000-t', 1000, 6600, 7300, False),
-            ('ADATA LEGEND 960 MAX', 1000, 6000, 7400, True)
-           
-            
-            
-        ]
-
-
-        for name, disk_mb,speed_write,speep_read, boofer in disk:
-            if insert_if_not_exists('disk', (name, disk_mb, speed_write, speep_read, boofer), ['name', 'disk_mb', 'speed_write', 'speep_read', 'boofer']):
-                print(f"Накопитель '{name}' добавлен.")
-            else:
-                print(f"Накопитель '{name}' уже существует.")
-        conn.commit()
-        print("Таблицы успешно заполнены данными")
 
     except sqlite3.Error as e:
         print(f"Ошибка при заполнении таблиц: {e}")
