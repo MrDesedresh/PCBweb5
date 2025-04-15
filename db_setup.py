@@ -60,6 +60,17 @@ def create_tables(conn):
                 wattage INTEGER NOT NULL
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE "disk" (
+	            id	INTEGER PRIMARY KEY AUTOINCREMENT,
+	            name	TEXT NOT NULL,
+	            disk_mb	INTEGER NOT NULL,
+	            speed_write	INTEGER NOT NULL,
+	            speep_read	INTEGER NOT NULL,
+	            boofer	REAL NOT NULL
+            )
+	
+        ''')
 
         conn.commit()
         print("Таблицы успешно созданы")
@@ -85,9 +96,58 @@ def populate_tables(conn):
             return False  # Данные уже существуют
 
         cpus = [
+            
+            ('Intel Core i3-12100K', 'LGA1700'),
+            ('Intel Core i5-12400K', 'LGA1700'),
             ('Intel Core i5-12600K', 'LGA1700'),
+            ('Intel Core i7-12700K', 'LGA1700'),
+            ('Intel Core i9-12900KS', 'LGA1700'),
+            ('Intel Core i3-13100K', 'LGA1700'),
+            ('Intel Core i5-13400K', 'LGA1700'),
+            ('Intel Core i5-13600K', 'LGA1700'),
+            ('Intel Core i7-13700K', 'LGA1700'),
+            ('Intel Core i9-13900KS', 'LGA1700'),
+            ('Intel Core i3-14100K', 'LGA1700'),
+            ('Intel Core i5-14400K', 'LGA1700'),
+            ('Intel Core i5-14600K', 'LGA1700'),
+            ('Intel Core i7-14700K', 'LGA1700'),
+            ('Intel Core i9-14900KS', 'LGA1700'),
+            ('Intel Core Ultra 5 225K', 'LGA1851'),
+            ('Intel Core Ultra 5 235K', 'LGA1851'),
+            ('Intel Core Ultra 5 245K', 'LGA1851'),
+            ('Intel Core Ultra 7 265K', 'LGA1851'),
+            ('Intel Core Ultra 9 285K', 'LGA1851'),
+            ('Intel Core Ultra 9 285KS', 'LGA1851'),
+
+            ('AMD Ryzen 5 5500', 'AM4'),
+            ('AMD Ryzen 5 5600', 'AM4'),
             ('AMD Ryzen 5 5600X', 'AM4'),
-            ('Intel Core i9-13900K', 'LGA1700'),
+            ('AMD Ryzen 7 5700', 'AM4'),
+            ('AMD Ryzen 7 5700X', 'AM4'),
+            ('AMD Ryzen 7 5800X', 'AM4'),
+            ('AMD Ryzen 9 5900X', 'AM4'),
+            ('AMD Ryzen 9 5950X', 'AM4'),
+            ('AMD Ryzen 5 7500f', 'AM5'),
+            ('AMD Ryzen 5 7600', 'AM5'),
+            ('AMD Ryzen 5 7600X', 'AM5'),
+            ('AMD Ryzen 7 7700', 'AM5'),
+            ('AMD Ryzen 7 7700X', 'AM5'),
+            ('AMD Ryzen 7 7800X', 'AM5'),
+            ('AMD Ryzen 9 7900X', 'AM5'),
+            
+            ('AMD Ryzen 5 9600', 'AM5'),
+            ('AMD Ryzen 5 9600X', 'AM5'),
+            ('AMD Ryzen 7 9700', 'AM5'),
+            ('AMD Ryzen 7 9700X', 'AM5'),
+            ('AMD Ryzen 7 9800X', 'AM5'),
+            ('AMD Ryzen 9 9900X', 'AM5'),
+            ('AMD Ryzen 9 9950X', 'AM5'),
+            ('AMD Ryzen 7 9800X3D', 'AM5'),
+            ('AMD Ryzen 9 9900X3D', 'AM5'),
+            ('AMD Ryzen 9 9950X3D', 'AM5'),
+            ('AMD Ryzen 7 7800X3D', 'AM5'),
+            ('AMD Ryzen 9 7900X3D', 'AM5'),
+            ('AMD Ryzen 9 7950X3D', 'AM5'),
             ('AMD Ryzen 9 7950X', 'AM5')
         ]
 
@@ -98,10 +158,25 @@ def populate_tables(conn):
                 print(f"Процессор '{name}' уже существует.")
 
         motherboards = [
+             ('ASUS ROG Strix Z690-A Gaming WiFi', 'LGA1700', 'DDR5'),
+            ('ASUS ROG Strix B760-G', 'LGA1700', 'DDR4'),
+            ('ASUS TUF Gaming Z790-Plus', 'LGA1700', 'DDR4'),
+            ('Gigabyte B550 Gaming X V2', 'AM4', 'DDR4'),
             ('ASUS ROG Strix Z690-A Gaming WiFi', 'LGA1700', 'DDR5'),
-            ('MSI MAG B550 Tomahawk', 'AM4', 'DDR4'),
-            ('ASUS ROG Maximus Z790 Hero', 'LGA1700', 'DDR5'),
-            ('ASUS ROG Crosshair X670E Hero', 'AM5', 'DDR5')
+            ('ASUS ROG Strix B760-G', 'LGA1700', 'DDR4'),
+            ('GIGABYTE Z890 AORUS ELITE WIFI7', 'LGA1851', 'DDR5'),
+            ('ASUS ROG STRIX Z890-E GAMING WIFI', 'LGA1851', 'DDR5'),
+            ('ASUS TUF GAMING B860-PLUS WIFI', 'LGA1851', 'DDR5'),
+            ('MSI MAG B860 TOMAHAWK WIFI', 'LGA1851', 'DDR5'),
+            ('ASUS ROG Strix B760-G', 'LGA1700', 'DDR4'),
+            
+            ('MSI X870 GAMING PLUS WIFI', 'AM5', 'DDR5'),
+            ('MSI MPG B550 GAMING PLUS', 'AM4', 'DDR4'),
+            ('ASUS PRIME H610M-K D4', 'LGA1700', 'DDR4'),
+            ('Gigabyte A520M DS3H', 'AM4', 'DDR4'),
+            ('Asrock A520M-HDV', 'AM4', 'DDR4'),
+             ('ASUS ROG Maximus Z790 Hero', 'LGA1700', 'DDR5'),
+             ('ASUS ROG Crosshair X670E Hero', 'AM5', 'DDR5')
         ]
 
         for name, socket, ram_type in motherboards:
@@ -113,6 +188,18 @@ def populate_tables(conn):
         ram = [
             ('Corsair Vengeance LPX 16GB (2x8GB) DDR4 3200MHz', 'DDR4', 3200),
             ('G.Skill Trident Z5 32GB (2x16GB) DDR5 6000MHz', 'DDR5', 6000),
+            ('ADATA XPG SPECTRIX D35G RGB (2x8GB) DDR4 3200MHz', 'DDR4', 3200),
+            ('ADATA XPG SPECTRIX D35G RGB (2x16GB) DDR4 3200MHz', 'DDR4', 6000),
+            ('ADATA XPG SPECTRIX D35G RGB (2x16GB) DDR4 3600MHz', 'DDR4', 6000),
+            ('FURY Beast Black RGB (2x16GB) DDR4 3600MHz', 'DDR4', 6000),
+            ('ADATA XPG SPECTRIX D35G RGB (2x8GB) DDR4 3600MHz', 'DDR4', 6000),
+            ('ADATA XPG Lancer RGB (2x16GB) DDR4 6000MHz', 'DDR4', 6000),
+            ('ADATA XPG Lancer RGB (2x16GB) DDR5 5600MHz', 'DDR5', 5600),
+            ('ADATA XPG SPECTRIX D35G RGB (2x16GB) DDR5 6000MHz', 'DDR5', 6000),
+            ('FURY Beast Black RGB (2x16GB) DDR5 5600MHz', 'DDR5', 5600),
+            ('FURY Beast Black RGB (2x16GB) DDR5 6600MHz', 'DDR5', 6600),
+            ('ADATA XPG Lancer RGB (2x16GB) DDR5 6000MHz', 'DDR5', 6000),
+            ('G.Skill Trident Z5 16GB (2x8GB) DDR5 6600MHz', 'DDR5', 6600),
             ('Kingston Fury Beast 16GB (2x8GB) DDR5 5200MHz', 'DDR5', 5200),
             ('Crucial Ballistix 16GB (2x8GB) DDR4 3600MHz', 'DDR4', 3600)
         ]
@@ -123,10 +210,47 @@ def populate_tables(conn):
                 print(f"ОЗУ '{name}' уже существует.")
 
         gpus = [
+            ('NVIDIA GeForce RTX 2070Super', 215),
+            ('NVIDIA GeForce RTX 2070', 175),
+            ('NVIDIA GeForce RTX 2080', 215),
+            ('NVIDIA GeForce RTX 2080Super', 250),
+            ('NVIDIA GeForce RTX 2060', 160),
+            ('NVIDIA GeForce RTX 2060super', 175),
+            
+            ('NVIDIA GeForce RTX 3070', 220),
+            ('NVIDIA GeForce RTX 3080', 320),
             ('NVIDIA GeForce RTX 3060', 170),
-            ('AMD Radeon RX 6700 XT', 230),
+            ('NVIDIA GeForce RTX 3060ti', 200),
+            ('NVIDIA GeForce RTX 3070', 220),
+            
+            ('NVIDIA GeForce RTX 3090', 350),
+            ('NVIDIA GeForce RTX 3050', 130),
             ('NVIDIA GeForce RTX 4080', 320),
-            ('AMD Radeon RX 7900 XTX', 355)
+            ('NVIDIA GeForce RTX 4060', 115),
+            ('NVIDIA GeForce RTX 4060ti', 165),
+            ('NVIDIA GeForce RTX 4070', 200),
+            ('NVIDIA GeForce RTX 4070ti', 285),
+            ('NVIDIA GeForce RTX 4070Super', 220),
+            ('NVIDIA GeForce RTX 4070ti Super', 285),
+            ('NVIDIA GeForce RTX 4080SUPER', 320),
+            ('NVIDIA GeForce RTX 4090', 450),
+            ('AMD Radeon RX 7900 XTX', 355),
+            ('AMD Radeon RX 7900 XT', 300),
+            ('AMD Radeon RX 6950 XT', 335),
+            ('AMD Radeon RX 6900 XT', 300),
+            ('AMD Radeon RX 7800 XT', 263),
+            ('AMD Radeon RX 6800 XT', 300),
+            ('AMD Radeon RX 7700 XT', 245),
+            ('AMD Radeon RX 6700 XT', 230),
+            ('AMD Radeon RX 7600 XT', 190),
+            ('AMD Radeon RX 6600 XT', 160),
+            ('AMD Radeon RX 7600 ', 165),
+            ('AMD Radeon RX 6600 ', 132),
+            ('AMD Radeon RX 5700 XT', 225),
+            ('AMD Radeon RX 5700 ', 180),
+            ('AMD Radeon RX 5600 XT', 150),
+            ('AMD Radeon RX 5500 XT', 130),
+            ('AMD Radeon RX 5500', 130)
         ]
         for name, power_consumption in gpus:
             if insert_if_not_exists('gpus', (name, power_consumption), ['name', 'power_consumption']):
@@ -138,8 +262,23 @@ def populate_tables(conn):
             ('Corsair RM750x (2021)', 750),
             ('Seasonic FOCUS GX-850', 850),
             ('be quiet! Straight Power 11 1000W', 1000),
+            ('Cougar GEX850', 850),
+            ('Thermaltake Toughpower GF3 1000W', 1000),
+            (' DEEPCOOL GamerStorm PN1200M', 1200),
+            ('Thermaltake Toughpower GT 850W Snow', 850),
+            ('ZALMAN TeraMax II 1000W', 1000),
+            ('Thermaltake Toughpower PF1 ARGB 850W', 850),
+            ('Thermaltake Toughpower GF 650W', 650),
+            ('DEEPCOOL PQ1000M', 1000),
+            ('DEEPCOOL PX1000G', 1000),
+            ('DEEPCOOL PQ850M', 850),
+            ('DEEPCOOL PM750D', 750),
+            ('DEEPCOOL PN750D', 750),
+            ('Thermaltake Toughpower GF 750W', 750),
+            ('DEEPCOOL PN650M', 650),
             ('EVGA SuperNOVA 650 GA', 650)
         ]
+
 
         for name, wattage in power_supplies:
             if insert_if_not_exists('power_supplies', (name, wattage), ['name', 'wattage']):
@@ -147,6 +286,29 @@ def populate_tables(conn):
             else:
                 print(f"Блок питания '{name}' уже существует.")
 
+        disk = [
+            ('Samsung 990 PRO', 1000, 6900, 7450, False),
+            ('ADATA LEGEND 960 MAX', 1000, 6000, 7400, False),
+            ('ADATA LEGEND 900', 2000, 5400, 7000, False),
+            ('Samsung 990 EVO', 1000, 4200, 5000, True),
+            ('Apacer AS2280Q4', 1000, 4400, 5000, False),
+            ('Samsung 990 EVO Plus', 1000, 6300, 7150, True),
+            ('Apacer AS2280F4 ', 1000, 9000, 11500, False),
+            ('Apacer AS2280Q4', 2000, 4400, 5000, False),
+            ('Samsung 990 EVO Plus', 2000, 6300, 7250, False),
+            ('Netac NV7000-t', 1000, 6600, 7300, False),
+            ('ADATA LEGEND 960 MAX', 1000, 6000, 7400, True)
+           
+            
+            
+        ]
+
+
+        for name, disk_mb,speed_write,speep_read, boofer in disk:
+            if insert_if_not_exists('disk', (name, disk_mb, speed_write, speep_read, boofer), ['name', 'disk_mb', 'speed_write', 'speep_read', 'boofer']):
+                print(f"Накопитель '{name}' добавлен.")
+            else:
+                print(f"Накопитель '{name}' уже существует.")
         conn.commit()
         print("Таблицы успешно заполнены данными")
 
